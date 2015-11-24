@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DigitalHouse.CommandParser;
 using DigitalHouse.Commands;
 using DigitalHouse.Communication;
 using DigitalHouse.DB;
@@ -13,12 +14,14 @@ namespace DigitalHouse
     {
         static void Main(string[] args)
         {
-            HardCodedDataBase hardCodedDataBase = new HardCodedDataBase();
-            CommandExecutor commandExecutor = new CommandExecutor(hardCodedDataBase);
+            IDeviceRepository hardCodedDeviceRepository = new HardCodedDeviceRepository();
+            IListener tcpListener = new TCPListener();
+            ICommandParser commandParser = new StringCommandParser();
 
-            var listener = new Listener();
-            listener.requestedCommand += commandExecutor.ExecuteCommand;
-            listener.StartListener();
+            CommandExecutor commandExecutor = new CommandExecutor(hardCodedDeviceRepository, commandParser);
+            commandExecutor.SubscribeToListener(tcpListener);
+            
+      
         }
     }
 }

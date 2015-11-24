@@ -7,9 +7,9 @@ using DigitalHouse.DB;
 
 namespace DigitalHouse.Commands
 {
-    public interface Command
+    public interface ICommand
     {
         string GetName();
-        string ExecuteCommand(HardCodedDataBase dataBase);
+        string ExecuteCommand(IDeviceRepository deviceRepository);
     }
 }

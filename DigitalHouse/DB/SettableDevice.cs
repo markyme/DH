@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace DigitalHouse.DB
 {
-    public class Settable
+    public class SettableDevice
     {
         public string name;
         public int value;
 
-        public Settable(string name, int value)
+        public SettableDevice(string name, int value)
         {
             this.name = name;
             this.value = value;

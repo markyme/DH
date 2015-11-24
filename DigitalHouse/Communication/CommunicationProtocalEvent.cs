@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DigitalHouse.Communication
 {
-    public delegate void CommunicationProtocalEvent(Listener sender, MessageParameters messageParameters);
+    public delegate void CommunicationProtocalEvent(TCPListener sender, MessageParameters messageParameters);
 }
 public class MessageParameters : EventArgs
 {

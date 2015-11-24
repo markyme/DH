@@ -7,16 +7,16 @@ using DigitalHouse.DB;
 
 namespace DigitalHouse.Commands
 {
-    public class ListDevices : Command
+    public class ListDevices : ICommand
     {
         public string GetName()
         {
             return "ListDevices";
         }
 
-        public string ExecuteCommand(HardCodedDataBase dataBase)
+        public string ExecuteCommand(IDeviceRepository deviceRepository)
         {
-            return dataBase.getDevicesList();
+            return deviceRepository.GetDevices();
         }
     }
 }

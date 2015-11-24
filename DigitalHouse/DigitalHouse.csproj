@@ -42,16 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandExecutor.cs" />
-    <Compile Include="Commands\Command.cs" />
+    <Compile Include="CommandParser\ICommandParser.cs" />
+    <Compile Include="CommandParser\StringCommandParser.cs" />
+    <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ListDevices.cs" />
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\SetValue.cs" />
     <Compile Include="Commands\Switch.cs" />
-    <Compile Include="Communication\Listener.cs" />
+    <Compile Include="Communication\IListener.cs" />
+    <Compile Include="Communication\TCPListener.cs" />
     <Compile Include="Communication\CommunicationProtocalEvent.cs" />
-    <Compile Include="DB\HardCodedDataBase.cs" />
-    <Compile Include="DB\ISettable.cs" />
-    <Compile Include="DB\Switchable.cs" />
+    <Compile Include="DB\HardCodedDeviceRepository.cs" />
+    <Compile Include="DB\IDeviceRepository.cs" />
+    <Compile Include="DB\SettableDevice.cs" />
     <Compile Include="DB\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

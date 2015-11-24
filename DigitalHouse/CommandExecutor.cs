@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DigitalHouse.CommandParser;
 using DigitalHouse.Commands;
 using DigitalHouse.Communication;
 using DigitalHouse.DB;
@@ -12,26 +13,24 @@ namespace DigitalHouse
 {
     public class CommandExecutor
     {
-        List<Command> commands;
-        private HardCodedDataBase dataBase;
-       
-        public CommandExecutor(HardCodedDataBase dataBase)
+        private IDeviceRepository deviceRepository;
+        private ICommandParser commandParser;
+
+        public CommandExecutor(IDeviceRepository deviceRepository, ICommandParser commandParser)
         {
-            commands = GetInstances<Command>();
-            this.dataBase = dataBase;
+            this.deviceRepository = deviceRepository;
+            this.commandParser = commandParser;
         }
 
-        private static List<T> GetInstances<T>()
+        public void SubscribeToListener(IListener listener)
         {
-            return (from t in Assembly.GetExecutingAssembly().GetTypes()
-                    where t.GetInterfaces().Contains(typeof(T)) && t.GetConstructor(Type.EmptyTypes) != null
-                    select (T)Activator.CreateInstance(t)).ToList();
+            listener.OnMessageRecieved += ExecuteCommand;
         }
 
-        public void ExecuteCommand(Listener sender, MessageParameters parameters)
+        public void ExecuteCommand(IListener sender, MessageParameters parameters)
         {
-            string response = commands.Find(x => x.GetName().Equals(parameters.message)).ExecuteCommand(dataBase);
-            sender.sendMessageToClient(response);
+            ICommand command = commandParser.ParseCommand(parameters.message);
+            sender.Send(command.ExecuteCommand(deviceRepository));
         }
     }
 }

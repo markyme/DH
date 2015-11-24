@@ -7,14 +7,14 @@ using DigitalHouse.DB;
 
 namespace DigitalHouse.Commands
 {
-    class Login : Command
+    class Login : ICommand
     {
         public string GetName()
         {
             throw new NotImplementedException();
         }
 
-        public string ExecuteCommand(HardCodedDataBase dataBase)
+        public string ExecuteCommand(IDeviceRepository deviceRepository)
         {
             throw new NotImplementedException();
         }
