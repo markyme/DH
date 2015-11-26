@@ -9,14 +9,19 @@ namespace DigitalHouse.Commands
 {
     public class ListDevices : ICommand
     {
+        private IDeviceRepository DeviceRepository;
+        public ListDevices(IDeviceRepository deviceRepository)
+        {
+            this.DeviceRepository = deviceRepository;
+        }
         public string GetName()
         {
             return "ListDevices";
         }
 
-        public string ExecuteCommand(IDeviceRepository deviceRepository)
+        public string ExecuteCommand()
         {
-            return deviceRepository.GetDevices();
+            return DeviceRepository.GetDevices();
         }
     }
 }

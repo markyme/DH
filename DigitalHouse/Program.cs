@@ -15,13 +15,11 @@ namespace DigitalHouse
         static void Main(string[] args)
         {
             IDeviceRepository hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            IListener tcpListener = new TCPListener();
-            ICommandParser commandParser = new StringCommandParser();
+            IListener listener = new TCPListener();
+            ICommandParser commandParser = new StringCommandParser(hardCodedDeviceRepository);
 
-            CommandExecutor commandExecutor = new CommandExecutor(hardCodedDeviceRepository, commandParser);
-            commandExecutor.SubscribeToListener(tcpListener);
-            
-      
+            CommandExecutor commandExecutor = new CommandExecutor(commandParser, listener);
+            listener.Listen();
         }
     }
 }

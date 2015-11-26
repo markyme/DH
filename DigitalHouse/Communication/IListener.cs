@@ -10,5 +10,6 @@ namespace DigitalHouse.Communication
     {
         event CommunicationProtocalEvent OnMessageRecieved;
         void Send(string message);
+        void Listen();
     }
 }

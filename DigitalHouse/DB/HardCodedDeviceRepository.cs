@@ -10,7 +10,6 @@ namespace DigitalHouse.DB
     {
         public List<SettableDevice> SettableDevices = new List<SettableDevice>();
         
-
         public HardCodedDeviceRepository()
         {
             SettableDevices.Add(new SettableDevice("light", 100));

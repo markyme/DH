@@ -13,24 +13,18 @@ namespace DigitalHouse
 {
     public class CommandExecutor
     {
-        private IDeviceRepository deviceRepository;
         private ICommandParser commandParser;
 
-        public CommandExecutor(IDeviceRepository deviceRepository, ICommandParser commandParser)
+        public CommandExecutor(ICommandParser commandParser, IListener listener)
         {
-            this.deviceRepository = deviceRepository;
             this.commandParser = commandParser;
-        }
-
-        public void SubscribeToListener(IListener listener)
-        {
             listener.OnMessageRecieved += ExecuteCommand;
         }
 
         public void ExecuteCommand(IListener sender, MessageParameters parameters)
         {
             ICommand command = commandParser.ParseCommand(parameters.message);
-            sender.Send(command.ExecuteCommand(deviceRepository));
+            sender.Send(command.ExecuteCommand());
         }
     }
 }

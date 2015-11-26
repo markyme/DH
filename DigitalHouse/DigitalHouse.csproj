@@ -46,9 +46,6 @@
     <Compile Include="CommandParser\StringCommandParser.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ListDevices.cs" />
-    <Compile Include="Commands\Login.cs" />
-    <Compile Include="Commands\SetValue.cs" />
-    <Compile Include="Commands\Switch.cs" />
     <Compile Include="Communication\IListener.cs" />
     <Compile Include="Communication\TCPListener.cs" />
     <Compile Include="Communication\CommunicationProtocalEvent.cs" />

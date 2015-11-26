@@ -10,6 +10,6 @@ namespace DigitalHouse.Commands
     public interface ICommand
     {
         string GetName();
-        string ExecuteCommand(IDeviceRepository deviceRepository);
+        string ExecuteCommand();
     }
 }
