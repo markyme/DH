@@ -14,10 +14,9 @@ namespace DigitalHouse
     {
         static void Main(string[] args)
         {
-            IDeviceRepository hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            IListener listener = new TCPListener();
-            ICommandParser commandParser = new StringCommandParser(hardCodedDeviceRepository);
-
+            var hardCodedDeviceRepository = new HardCodedDeviceRepository();
+            var listener = new TCPListener();
+            var commandParser = new CommandParser.CommandParser(hardCodedDeviceRepository);
             CommandExecutor commandExecutor = new CommandExecutor(commandParser, listener);
             listener.Listen();
         }

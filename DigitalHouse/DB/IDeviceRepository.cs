@@ -8,6 +8,6 @@ namespace DigitalHouse.DB
 {
     public interface IDeviceRepository
     {
-        string GetDevices();
+        IEnumerable<SettableDevice> GetDevices();
     }
 }

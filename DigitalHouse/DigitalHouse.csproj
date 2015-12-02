@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,22 +45,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandExecutor.cs" />
-    <Compile Include="CommandParser\ICommandParser.cs" />
-    <Compile Include="CommandParser\StringCommandParser.cs" />
+    <Compile Include="CommandParser\CommandParser.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ListDevices.cs" />
+    <Compile Include="Commands\UnknownCommand.cs" />
     <Compile Include="Communication\IListener.cs" />
-    <Compile Include="Communication\TCPListener.cs" />
+    <Compile Include="Communication\TCP\TCPListener.cs" />
     <Compile Include="Communication\CommunicationProtocalEvent.cs" />
     <Compile Include="DB\HardCodedDeviceRepository.cs" />
     <Compile Include="DB\IDeviceRepository.cs" />
     <Compile Include="DB\SettableDevice.cs" />
-    <Compile Include="DB\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,9 +15,9 @@ namespace DigitalHouse.DB
             SettableDevices.Add(new SettableDevice("light", 100));
         }
 
-        public string GetDevices()
+        public IEnumerable<SettableDevice> GetDevices()
         {
-            return SettableDevices.ToString();
+            return SettableDevices;
         }
     }
 }

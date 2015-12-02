@@ -8,14 +8,15 @@ using DigitalHouse.CommandParser;
 using DigitalHouse.Commands;
 using DigitalHouse.Communication;
 using DigitalHouse.DB;
+using Newtonsoft.Json;
 
 namespace DigitalHouse
 {
     public class CommandExecutor
     {
-        private ICommandParser commandParser;
+        private CommandParser.CommandParser commandParser;
 
-        public CommandExecutor(ICommandParser commandParser, IListener listener)
+        public CommandExecutor(CommandParser.CommandParser commandParser, IListener listener)
         {
             this.commandParser = commandParser;
             listener.OnMessageRecieved += ExecuteCommand;
