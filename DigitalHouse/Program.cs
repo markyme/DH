@@ -22,4 +22,10 @@ namespace DigitalHouse
     //TODO: 1. Login - SessionManager?
     //TODO: 2. Separate everything to different projects
     //TODO: 3. Extendable - Different Listeners (communication, JSON commands?)
+    //TODO: 4. Error Handling - per module + global
+    //TODO: 5. Unit Tests
+
+
+    // A. Naming - Clear name and what it does - i.e. tcplistener to digitalhometcplistener
+    // B. Thread - move to newer way
 }
