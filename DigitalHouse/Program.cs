@@ -28,4 +28,6 @@ namespace DigitalHouse
 
     // A. Naming - Clear name and what it does - i.e. tcplistener to digitalhometcplistener
     // B. Thread - move to newer way
+    // C. Watch for unsafe operations
+    // D. Read about command patter - can execute + should have its own state
 }
