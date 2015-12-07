@@ -11,6 +11,7 @@ namespace DigitalHouse.Commands
     class UnknownCommand : ICommand
     {
         private IDeviceRepository mDeviceRepository;
+
         public UnknownCommand(IDeviceRepository deviceRepository)
         {
             mDeviceRepository = deviceRepository;
@@ -21,7 +22,7 @@ namespace DigitalHouse.Commands
             return "UnknownCommand";
         }
 
-        public string ExecuteCommand()
+        public string ExecuteCommand(List<string> parameters)
         {
             return "UnknownCommand.";
         }

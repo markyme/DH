@@ -11,6 +11,6 @@ namespace DigitalHouse.Commands
     public interface ICommand
     {
         string GetName();
-        string ExecuteCommand();
+        string ExecuteCommand(List<string> parameters);
     }
 }

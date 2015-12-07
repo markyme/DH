@@ -8,13 +8,13 @@ namespace DigitalHouse.DB
 {
     public class SettableDevice
     {
-        public string name;
-        public int value;
+        public string Name;
+        public int Value;
 
         public SettableDevice(string name, int value)
         {
-            this.name = name;
-            this.value = value;
+            Name = name;
+            Value = value;
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalHouse.DB;
+using DigitalHouse.DB.UsersRepo;
 using Newtonsoft.Json;
 
 namespace DigitalHouse.Commands
@@ -11,6 +13,7 @@ namespace DigitalHouse.Commands
     public class ListDevices : ICommand
     {
         private readonly IDeviceRepository mDeviceRepository;
+
         public ListDevices(IDeviceRepository deviceRepository)
         {
             mDeviceRepository = deviceRepository;
@@ -21,14 +24,14 @@ namespace DigitalHouse.Commands
             return "ListDevices";
         }
 
-        public string ExecuteCommand()
+        public string ExecuteCommand(List<string> parameters)
         {
-            IEnumerable<SettableDevice> devices = mDeviceRepository.GetDevices();
+            ConcurrentDictionary<string, SettableDevice> devices = mDeviceRepository.GetDevices();
 
             string resp = "Devices: ";
-            foreach (var settableDevice in devices)
+            foreach (KeyValuePair<string, SettableDevice> settableDevice in devices)
             {
-                resp += settableDevice.name + ", State: " + settableDevice.value + " ";
+                resp += settableDevice.Key + ", State: " + settableDevice.Value.Value + " ";
             }
 
             return resp;

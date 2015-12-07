@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DigitalHouse.CommandParser;
-using DigitalHouse.Commands;
+﻿using DigitalHouse.CommandParsers;
 using DigitalHouse.Communication;
 using DigitalHouse.DB;
+using DigitalHouse.DB.UsersRepo;
 
 namespace DigitalHouse
 {
@@ -14,11 +9,17 @@ namespace DigitalHouse
     {
         static void Main(string[] args)
         {
+            var hardCodedUserRepository = new HardCodedUserRepository();
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            var listener = new TCPListener();
-            var commandParser = new CommandParser.CommandParser(hardCodedDeviceRepository);
-            CommandExecutor commandExecutor = new CommandExecutor(commandParser, listener);
+            var listener = new TcpListener();
+            var commandParser = new CommandParser(hardCodedDeviceRepository);
+            var commandExecutor = new CommandExecutor(commandParser, listener);
             listener.Listen();
         }
     }
+
+
+    //TODO: 1. Login - SessionManager?
+    //TODO: 2. Separate everything to different projects
+    //TODO: 3. Extendable - Different Listeners (communication, JSON commands?)
 }
