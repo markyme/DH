@@ -13,19 +13,42 @@ namespace DigitalHouse.CommandParsers
 {
     public class CommandParser
     {
-        readonly Dictionary<string,ICommand> mCommands;
+        readonly Dictionary<string,ICommand> mAvailableCommands;
 
         public CommandParser(IDeviceRepository deviceRepository)
         {
-            mCommands = GetCommands(deviceRepository);
+            mAvailableCommands = GetCommands(deviceRepository);
         }
         
         public ICommand ParseCommand(string message)
         {
-            string messageToParse = message;
-            List<string> parameters = messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
+            var parameters = ParseStringToParameterList(message);
+            if (!mAvailableCommands.ContainsKey(parameters.First()))
+            {
+                return mAvailableCommands["unknowncommand"];
+            }
+            else
+            {
+                return new mAvailableCommands[parameters.First()]
+                {
+                    
+                }
+                // init command with params
+
+            }
             
-            return mCommands.ContainsKey(parameters.First().ToLower()) ? mCommands[parameters.First().ToLower()] : mCommands["unknowncommand"];
+
+
+
+            return null;
+        }
+
+        private static IEnumerable<string> ParseStringToParameterList(string messageToParse)
+        {
+            foreach (var message in messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries))
+            {
+                yield return message.ToLower();
+            }
         }
 
         private Dictionary<string, ICommand> GetCommands(IDeviceRepository deviceRepository)
@@ -38,13 +61,6 @@ namespace DigitalHouse.CommandParsers
                 commands.Add(command.GetName().ToLower(), command);
             }
             return commands;
-        }
-
-        public List<string> ParseCommandParams(string message)
-        {
-            List<string> parameters = message.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
-            parameters.RemoveAt(0);
-            return parameters;
         }
     }
 }

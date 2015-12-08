@@ -19,12 +19,14 @@ namespace DigitalHouse.Commands
             mDeviceRepository = deviceRepository;
         }
 
+        public int NeededParamCount { get; private set; }
+
         public string GetName()
         {
             return "ListDevices";
         }
 
-        public string ExecuteCommand(List<string> parameters)
+        public string Execute()
         {
             ConcurrentDictionary<string, SettableDevice> devices = mDeviceRepository.GetDevices();
 
@@ -35,6 +37,11 @@ namespace DigitalHouse.Commands
             }
 
             return resp;
+        }
+
+        public bool CanExecute()
+        {
+            return true;
         }
     }
 }

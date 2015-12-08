@@ -51,10 +51,12 @@
     <Compile Include="Commands\Login.cs" />
     <Compile Include="Commands\SetDeviceValue.cs" />
     <Compile Include="Commands\UnknownCommand.cs" />
-    <Compile Include="Communication\Protocols\CommunicationResponseDelegate.cs" />
-    <Compile Include="Communication\IListener.cs" />
-    <Compile Include="Communication\TCP\TCPListener.cs" />
-    <Compile Include="Communication\Protocols\CommunicationRequestEvent.cs" />
+    <Compile Include="Communication\Protocols\IMessageResponseSender.cs" />
+    <Compile Include="Communication\Protocols\MessageNotifactionResponseDelegate.cs" />
+    <Compile Include="Communication\IMessageNotifier.cs" />
+    <Compile Include="Communication\TCP\TcpMessageResponseSender.cs" />
+    <Compile Include="Communication\TCP\TcpMessageNotifier.cs" />
+    <Compile Include="Communication\Protocols\MessageNotificationEvent.cs" />
     <Compile Include="DB\DeviceRepo\HardCodedDeviceRepository.cs" />
     <Compile Include="DB\DeviceRepo\IDeviceRepository.cs" />
     <Compile Include="DB\DeviceRepo\SettableDevice.cs" />

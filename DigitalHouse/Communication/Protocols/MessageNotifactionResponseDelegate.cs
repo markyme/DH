@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace DigitalHouse.Communication
 {
-    public delegate void CommunicationResponseDelegate(string message);
+    public delegate void MessageNotifactionResponseDelegate(string message);
 }

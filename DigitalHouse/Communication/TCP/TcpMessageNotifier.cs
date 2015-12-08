@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using DigitalHouse.Communication.Protocols;
 
-namespace DigitalHouse.Communication
+namespace DigitalHouse.Communication.TCP
 {
-    public class TcpListener : IListener
+    public class TcpMessageNotifier : IMessageNotifier
     {
-        public event CommunicationRequestEvent OnMessageRecieved;
-        private readonly System.Net.Sockets.TcpListener mListener;
+        public event MessageNotificationEvent OnMessageRecieved;
+        private readonly TcpListener mListener;
 
-        public TcpListener()
+        public TcpMessageNotifier()
         {
-            mListener = new System.Net.Sockets.TcpListener(IPAddress.Any, 8001);
+            mListener = new TcpListener(IPAddress.Any, 8001);
         }
 
-        public void Listen()
+        public void Start()
         {
             mListener.Start();
             Console.WriteLine("Waiting for a connection.....");
@@ -48,7 +46,7 @@ namespace DigitalHouse.Communication
                     if (message.Equals("\r\n")) { continue; }
 
                     Console.WriteLine("Recieved: " + message);
-                    OnMessageRecieved(message, (x) => socket.Send(Encoding.ASCII.GetBytes(x)));
+                    OnMessageRecieved(message, new TcpMessageResponseSender(socket));
                 }
                 catch (Exception exception)
                 {

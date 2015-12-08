@@ -17,14 +17,21 @@ namespace DigitalHouse.Commands
             mDeviceRepository = deviceRepository;
         }
 
+        public int NeededParamCount { get; private set; }
+
         public string GetName()
         {
             return "UnknownCommand";
         }
 
-        public string ExecuteCommand(List<string> parameters)
+        public string Execute()
         {
             return "UnknownCommand.";
+        }
+
+        public bool CanExecute()
+        {
+            return true;
         }
     }
 }

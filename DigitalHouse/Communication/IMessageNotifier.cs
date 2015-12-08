@@ -4,12 +4,13 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using DigitalHouse.Communication.Protocols;
 
 namespace DigitalHouse.Communication
 {
-    public interface IListener
+    public interface IMessageNotifier
     {
-        event CommunicationRequestEvent OnMessageRecieved;
-        void Listen();
+        event MessageNotificationEvent OnMessageRecieved;
+        void Start();
     }
 }

@@ -1,5 +1,7 @@
-﻿using DigitalHouse.CommandParsers;
+﻿using DigitalHouse.CommandExecutors;
+using DigitalHouse.CommandParsers;
 using DigitalHouse.Communication;
+using DigitalHouse.Communication.TCP;
 using DigitalHouse.DB;
 using DigitalHouse.DB.UsersRepo;
 
@@ -11,23 +13,23 @@ namespace DigitalHouse
         {
             var hardCodedUserRepository = new HardCodedUserRepository();
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            var listener = new TcpListener();
+            var listener = new TcpMessageNotifier();
             var commandParser = new CommandParser(hardCodedDeviceRepository);
             var commandExecutor = new CommandExecutor(commandParser, listener);
-            listener.Listen();
+            listener.Start();
         }
     }
 
 
-    //TODO: 1. Login - SessionManager?
-    //TODO: 2. Separate everything to different projects
-    //TODO: 3. Extendable - Different Listeners (communication, JSON commands?)
-    //TODO: 4. Error Handling - per module + global
-    //TODO: 5. Unit Tests
+    //TODO:  Switch case - delete the reflection
+    //TODO:  Error Handling - per module + global + client Lost = not ending
 
-
-    // A. Naming - Clear name and what it does - i.e. tcplistener to digitalhometcplistener
-    // B. Thread - move to newer way
-    // C. Watch for unsafe operations
-    // D. Read about command patter - can execute + should have its own state
+    //TODO:  Login - SessionManager?
+    //TODO:  Extendable - Different Listeners (communication, JSON commands?) 
+    //TODO:  Unit Tests
+    //TODO:  Thread - move to newer way
+    
+    //  Naming - Correct and Related
+    //  Watch for unsafe operations
+    
 }
