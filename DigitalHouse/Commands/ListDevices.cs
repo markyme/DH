@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DigitalHouse.DB;
 using DigitalHouse.DB.UsersRepo;
-using Newtonsoft.Json;
 
 namespace DigitalHouse.Commands
 {
@@ -14,7 +13,7 @@ namespace DigitalHouse.Commands
     {
         private readonly IDeviceRepository mDeviceRepository;
 
-        public ListDevices(IDeviceRepository deviceRepository)
+        public ListDevices(IDeviceRepository deviceRepository, IEnumerable<string> parameters)
         {
             mDeviceRepository = deviceRepository;
         }

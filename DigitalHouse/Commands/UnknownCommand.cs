@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalHouse.DB;
-using Newtonsoft.Json;
 
 namespace DigitalHouse.Commands
 {

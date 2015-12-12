@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,42 +14,33 @@ namespace DigitalHouse.CommandParsers
 {
     public class CommandParser
     {
-        readonly Dictionary<string,ICommand> mAvailableCommands;
+        private readonly IDeviceRepository mDeviceRepository;
 
         public CommandParser(IDeviceRepository deviceRepository)
         {
-            mAvailableCommands = GetCommands(deviceRepository);
+            mDeviceRepository = deviceRepository;
         }
-        
+
         public ICommand ParseCommand(string message)
         {
-            var parameters = ParseStringToParameterList(message);
-            if (!mAvailableCommands.ContainsKey(parameters.First()))
+            List<string> parameters = ParseStringToParameterList(message);
+
+            switch (parameters.First())
             {
-                return mAvailableCommands["unknowncommand"];
+                case "listdevices":
+                    return new ListDevices(mDeviceRepository, parameters.Skip(1));
+
+                case "setdevicevalue":
+                    return new SetDeviceValue(mDeviceRepository, parameters.Skip(1));
+
+                default:
+                    return new UnknownCommand(mDeviceRepository);
             }
-            else
-            {
-                return new mAvailableCommands[parameters.First()]
-                {
-                    
-                }
-                // init command with params
-
-            }
-            
-
-
-
-            return null;
         }
 
-        private static IEnumerable<string> ParseStringToParameterList(string messageToParse)
+        private static List<string> ParseStringToParameterList(string messageToParse)
         {
-            foreach (var message in messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries))
-            {
-                yield return message.ToLower();
-            }
+            return messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
         private Dictionary<string, ICommand> GetCommands(IDeviceRepository deviceRepository)
