@@ -1,5 +1,4 @@
-﻿
-using DigitalHouse.CommandExecutors;
+﻿using DigitalHouse.BL.CommandExecutors;
 using DigitalHouse.CommandParsers;
 using DigitalHouse.Communication.TCP;
 using DigitalHouse.DB;
@@ -11,25 +10,40 @@ namespace DigitalHouse
     {
         static void Main(string[] args)
         {
-            var hardCodedUserRepository = new HardCodedUserRepository();
+            //var hardCodedUserRepository = new HardCodedUserRepository();
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            var notifier = new TcpMessageNotifier();
+            
+            var notifier = new TcpNewSessionNotifier();
             var commandParser = new CommandParser(hardCodedDeviceRepository);
             var commandExecutor = new CommandExecutor(commandParser, notifier);
+
             notifier.Start();
         }
     }
 
 
-    //TODO:  Error Handling - per module + global + client Lost = not ending
+    // Split command exeuter to SessionManagerType and Executer
+    // Add isLoggedIn To Isession
+    // Handle login state change
 
-    //TODO:  Login - SessionManager?
+    //TODO:  Error Handling - per module + global + client Lost = not ending
     //TODO:  Extendable - Different Listeners (communication, JSON commands?) 
     //TODO:  Unit Tests
     //TODO:  Thread - move to newer way
-    // separate comm from logic
 
     //  Naming - Correct and Related
     //  Watch for unsafe operations
 
+    /*
+     * ParseCommand
+     * -------------
+       unknown command name
+       command name casing
+       no match in parameter count
+       null
+       empty
+
+       NUnit
+       FakeItEasy
+     */
 }

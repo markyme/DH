@@ -8,9 +8,9 @@ using DigitalHouse.Communication.Protocols;
 
 namespace DigitalHouse.Communication
 {
-    public interface IMessageNotifier
+    public interface INewSessionNotifier
     {
-        event MessageNotificationEvent OnMessageRecieved;
+        event NewSessionEvent OnNewSession;
         void Start();
     }
 }
