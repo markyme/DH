@@ -13,7 +13,7 @@ namespace DigitalHouse.Commands
     {
         private readonly IDeviceRepository mDeviceRepository;
 
-        public ListDevices(IDeviceRepository deviceRepository, IEnumerable<string> parameters)
+        public ListDevices(IDeviceRepository deviceRepository)
         {
             mDeviceRepository = deviceRepository;
         }

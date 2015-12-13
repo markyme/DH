@@ -7,7 +7,7 @@ using DigitalHouse.DB;
 
 namespace DigitalHouse.Commands
 {
-    class UnknownCommand : ICommand
+    public class UnknownCommand : ICommand
     {
         private IDeviceRepository mDeviceRepository;
 

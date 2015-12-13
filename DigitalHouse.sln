@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHouse", "DigitalHouse\DigitalHouse.csproj", "{0EE9629F-607D-486D-9E1E-E67A7B6C090E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{48DED0E9-B7F8-4105-BD1C-D0C3393D1AB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalHouseTests", "DigitalHouseTests\DigitalHouseTests.csproj", "{32C607C2-ECE3-4477-A81E-9107D61B076C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,10 @@ Global
 		{0EE9629F-607D-486D-9E1E-E67A7B6C090E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE9629F-607D-486D-9E1E-E67A7B6C090E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE9629F-607D-486D-9E1E-E67A7B6C090E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32C607C2-ECE3-4477-A81E-9107D61B076C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32C607C2-ECE3-4477-A81E-9107D61B076C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32C607C2-ECE3-4477-A81E-9107D61B076C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32C607C2-ECE3-4477-A81E-9107D61B076C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

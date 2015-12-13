@@ -9,7 +9,6 @@ namespace DigitalHouse.Commands
 {
     public class SetDeviceValue : ICommand
     {
-
         private readonly IDeviceRepository mDeviceRepository;
         private string mDeviceToSet;
         private string mValueToSet;

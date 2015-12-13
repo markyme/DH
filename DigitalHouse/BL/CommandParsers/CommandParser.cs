@@ -21,14 +21,16 @@ namespace DigitalHouse.CommandParsers
             mDeviceRepository = deviceRepository;
         }
 
-        public ICommand ParseCommand(string message)
+        public ICommand Parse(string message)
         {
+            if (String.IsNullOrEmpty(message)) { return new UnknownCommand(mDeviceRepository); }
+
             List<string> parameters = ParseStringToParameterList(message);
 
-            switch (parameters.First())
+            switch (parameters.FirstOrDefault().ToLower())
             {
                 case "listdevices":
-                    return new ListDevices(mDeviceRepository, parameters.Skip(1));
+                    return new ListDevices(mDeviceRepository);
 
                 case "setdevicevalue":
                     return new SetDeviceValue(mDeviceRepository, parameters.Skip(1));

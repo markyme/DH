@@ -33,17 +33,4 @@ namespace DigitalHouse
 
     //  Naming - Correct and Related
     //  Watch for unsafe operations
-
-    /*
-     * ParseCommand
-     * -------------
-       unknown command name
-       command name casing
-       no match in parameter count
-       null
-       empty
-
-       NUnit
-       FakeItEasy
-     */
 }

@@ -22,7 +22,7 @@ namespace DigitalHouse.BL.CommandExecutors
 
         public void ExecuteCommand(IHomeSession homeSession, string message)
         {
-            var command = mCommandParser.ParseCommand(message);
+            var command = mCommandParser.Parse(message);
             
             if (command.CanExecute())
             {
