@@ -16,7 +16,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_SomeInvalidCommand_ReturnUnknownCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse(SomeInvalidCommand);
 
@@ -27,7 +27,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_UnusualCommandCasing_ReturnCorrectCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse(UnusualCommandCasing);
 
@@ -38,7 +38,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_EmptyCommand_ReturnUnknownCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse("");
 
@@ -49,7 +49,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_NullCommand_ReturnUnknownCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse(null);
 
@@ -60,7 +60,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_NotEnoughParameters_ReturnUnknownCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse(NotEnoughParametersWithCommand);
 
@@ -71,7 +71,7 @@ namespace DigitalHouseTests.CommandParser
         public void ParseCommand_TooMuchParameters_ReturnUnknownCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.CommandParsers.CommandParser(fakeDeviceRepository);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
             var command = commandParser.Parse(TooMuchParametersWithCommand);
 

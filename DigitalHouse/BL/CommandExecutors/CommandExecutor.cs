@@ -1,23 +1,17 @@
-﻿using DigitalHouse.CommandParsers;
+﻿using DigitalHouse.BL.CommandParsers;
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Protocols;
 using DigitalHouse.Communication.Session;
 
 namespace DigitalHouse.BL.CommandExecutors
 {
-    public class CommandExecutor
+    public class CommandExecutor : ICommandExecutor
     {
         private readonly CommandParser mCommandParser;
 
-        public CommandExecutor(CommandParser commandParser, INewSessionNotifier newSessionNotifier)
+        public CommandExecutor(CommandParser commandParser)
         {
             mCommandParser = commandParser;
-            newSessionNotifier.OnNewSession += RegisterSession;
-        }
-
-        public void RegisterSession(IHomeSession homeSession)
-        {
-            homeSession.OnMessageRecieved += ExecuteCommand;
         }
 
         public void ExecuteCommand(IHomeSession homeSession, string message)

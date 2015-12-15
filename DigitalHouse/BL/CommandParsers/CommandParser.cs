@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using DigitalHouse.Commands;
 using DigitalHouse.DB;
-using DigitalHouse.DB.UsersRepo;
 
-namespace DigitalHouse.CommandParsers
+namespace DigitalHouse.BL.CommandParsers
 {
     public class CommandParser
     {
@@ -23,7 +18,10 @@ namespace DigitalHouse.CommandParsers
 
         public ICommand Parse(string message)
         {
-            if (String.IsNullOrEmpty(message)) { return new UnknownCommand(mDeviceRepository); }
+            if (String.IsNullOrEmpty(message))
+            {
+                return new UnknownCommand(mDeviceRepository);
+            }
 
             List<string> parameters = ParseStringToParameterList(message);
 
@@ -45,7 +43,7 @@ namespace DigitalHouse.CommandParsers
             return messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
-        private Dictionary<string, ICommand> GetCommands(IDeviceRepository deviceRepository)
+        /*private Dictionary<string, ICommand> GetCommands(IDeviceRepository deviceRepository)
         {
             Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
             foreach (var command in from t in Assembly.GetExecutingAssembly().GetTypes()
@@ -55,6 +53,6 @@ namespace DigitalHouse.CommandParsers
                 commands.Add(command.GetName().ToLower(), command);
             }
             return commands;
-        }
+        }*/
     }
 }

@@ -11,5 +11,7 @@ namespace DigitalHouse.Communication.Session
     {
         void Write(string message);
         event NewMessageRecievedEvent OnMessageRecieved;
+        bool IsLoggedIn();
+        void Login();
     }
 }
