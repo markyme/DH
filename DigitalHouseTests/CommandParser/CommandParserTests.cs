@@ -8,7 +8,7 @@ namespace DigitalHouseTests.CommandParser
     public class CommandParserTests
     {
         private const string SomeInvalidCommand = "SomethingInvalid";
-        private const string UnusualCommandCasing = "LisTDeViCes";
+        private const string AllUppercaseCommand = "LISTDEVICES";
         private const string NotEnoughParametersWithCommand = "SetDeviceValue device";
         private const string TooMuchParametersWithCommand = "SetDeviceValue device value something";
 
@@ -29,7 +29,7 @@ namespace DigitalHouseTests.CommandParser
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
             var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
 
-            var command = commandParser.Parse(UnusualCommandCasing);
+            var command = commandParser.Parse(AllUppercaseCommand);
 
             Assert.AreEqual(typeof(ListDevices), command.GetType());
         }
@@ -57,7 +57,7 @@ namespace DigitalHouseTests.CommandParser
         }
 
         [Test]
-        public void ParseCommand_NotEnoughParameters_ReturnUnknownCommand()
+        public void ParseCommand_NotEnoughParameters_ReturnCorrectCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
             var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
@@ -68,7 +68,7 @@ namespace DigitalHouseTests.CommandParser
         }
 
         [Test]
-        public void ParseCommand_TooMuchParameters_ReturnUnknownCommand()
+        public void ParseCommand_TooMuchParameters_ReturnCorrectCommand()
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
             var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
