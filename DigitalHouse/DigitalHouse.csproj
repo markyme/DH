@@ -44,6 +44,7 @@
     <Compile Include="BL\CommandExecutors\CommandExecutor.cs" />
     <Compile Include="BL\CommandExecutors\ICommandExecutor.cs" />
     <Compile Include="BL\CommandParsers\CommandParser.cs" />
+    <Compile Include="BL\CommandParsers\ICommandParser.cs" />
     <Compile Include="BL\Commands\ICommand.cs" />
     <Compile Include="BL\Commands\ListDevices.cs" />
     <Compile Include="BL\Commands\SetDeviceValue.cs" />

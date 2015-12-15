@@ -7,9 +7,9 @@ namespace DigitalHouse.BL.CommandExecutors
 {
     public class CommandExecutor : ICommandExecutor
     {
-        private readonly CommandParser mCommandParser;
+        private readonly ICommandParser mCommandParser;
 
-        public CommandExecutor(CommandParser commandParser)
+        public CommandExecutor(ICommandParser commandParser)
         {
             mCommandParser = commandParser;
         }

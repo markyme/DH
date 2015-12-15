@@ -7,7 +7,7 @@ using DigitalHouse.DB;
 
 namespace DigitalHouse.BL.CommandParsers
 {
-    public class CommandParser
+    public class CommandParser : ICommandParser
     {
         private readonly IDeviceRepository mDeviceRepository;
 
