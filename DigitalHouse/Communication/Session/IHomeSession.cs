@@ -13,5 +13,6 @@ namespace DigitalHouse.Communication.Session
         event NewMessageRecievedEvent OnMessageRecieved;
         bool IsLoggedIn();
         void Login();
+        void Logout();
     }
 }

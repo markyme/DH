@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
 using DigitalHouse.DB.UsersRepo;
 
@@ -12,10 +13,12 @@ namespace DigitalHouse.Commands
     public class ListDevices : ICommand
     {
         private readonly IDeviceRepository mDeviceRepository;
+        private readonly IHomeSession mHomeSession;
 
-        public ListDevices(IDeviceRepository deviceRepository)
+        public ListDevices(IDeviceRepository deviceRepository, IHomeSession homeHomeSession)
         {
             mDeviceRepository = deviceRepository;
+            mHomeSession = homeHomeSession;
         }
 
         public string GetName()
@@ -38,7 +41,7 @@ namespace DigitalHouse.Commands
 
         public bool CanExecute()
         {
-            return true;
+            return mHomeSession.IsLoggedIn();
         }
     }
 }

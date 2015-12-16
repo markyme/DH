@@ -47,6 +47,8 @@
     <Compile Include="BL\CommandParsers\ICommandParser.cs" />
     <Compile Include="BL\Commands\ICommand.cs" />
     <Compile Include="BL\Commands\ListDevices.cs" />
+    <Compile Include="BL\Commands\Login.cs" />
+    <Compile Include="BL\Commands\Logout.cs" />
     <Compile Include="BL\Commands\SetDeviceValue.cs" />
     <Compile Include="BL\Commands\UnknownCommand.cs" />
     <Compile Include="Communication\Protocols\INewSessionNotifier.cs" />

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DigitalHouse.BL.Commands;
 using DigitalHouse.Commands;
+using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
 
 namespace DigitalHouse.BL.CommandParsers
@@ -10,17 +12,19 @@ namespace DigitalHouse.BL.CommandParsers
     public class CommandParser : ICommandParser
     {
         private readonly IDeviceRepository mDeviceRepository;
+        private readonly IHomeSession mHomeSession;
 
-        public CommandParser(IDeviceRepository deviceRepository)
+        public CommandParser(IDeviceRepository deviceRepository, IHomeSession homeSession)
         {
             mDeviceRepository = deviceRepository;
+            mHomeSession = homeSession;
         }
 
         public ICommand Parse(string message)
         {
             if (String.IsNullOrEmpty(message))
             {
-                return new UnknownCommand(mDeviceRepository);
+                return new UnknownCommand();
             }
 
             List<string> parameters = ParseStringToParameterList(message);
@@ -28,13 +32,19 @@ namespace DigitalHouse.BL.CommandParsers
             switch (parameters.FirstOrDefault().ToLower())
             {
                 case "listdevices":
-                    return new ListDevices(mDeviceRepository);
+                    return new ListDevices(mDeviceRepository, mHomeSession);
 
                 case "setdevicevalue":
-                    return new SetDeviceValue(mDeviceRepository, parameters.Skip(1));
+                    return new SetDeviceValue(mDeviceRepository, mHomeSession, parameters.Skip(1));
+
+                case "login":
+                    return new Login(mHomeSession);
+
+                case "logout":
+                    return new Logout(mHomeSession);
 
                 default:
-                    return new UnknownCommand(mDeviceRepository);
+                    return new UnknownCommand();
             }
         }
 
@@ -42,17 +52,5 @@ namespace DigitalHouse.BL.CommandParsers
         {
             return messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
         }
-
-        /*private Dictionary<string, ICommand> GetCommands(IDeviceRepository deviceRepository)
-        {
-            Dictionary<string, ICommand> commands = new Dictionary<string, ICommand>();
-            foreach (var command in from t in Assembly.GetExecutingAssembly().GetTypes()
-                                    where t.GetInterfaces().Contains(typeof(ICommand))
-                                    select (ICommand)Activator.CreateInstance(t, deviceRepository))
-            {
-                commands.Add(command.GetName().ToLower(), command);
-            }
-            return commands;
-        }*/
     }
 }

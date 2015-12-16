@@ -16,20 +16,15 @@ namespace DigitalHouse
         {
             var tcpNewSessionNotifier = new TcpNewSessionNotifier();
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
-            var commandParser = new CommandParser(hardCodedDeviceRepository);
-            var commandExecutor = new CommandExecutor(commandParser);
 
-            var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, commandExecutor);
-            //tcpNewSessionNotifier.OnNewSession += x => x.OnMessageRecieved += new CommandExecutor(commandParser).ExecuteCommand;
-            
-             tcpNewSessionNotifier.Start();
-            
+            var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, hardCodedDeviceRepository);
+
+            tcpNewSessionNotifier.Start();
         }
     }
 
     // Cover all flows and commands on unittests - use nunit testcase
-    // Refactor code to be disposable
-    // Login command - will depend on Isession
+    
 
     //TODO:  Error Handling - per module + global + client Lost = not ending
     //TODO:  Extendable - Different Listeners (communication, JSON commands?) 

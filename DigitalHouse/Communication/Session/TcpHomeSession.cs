@@ -24,6 +24,11 @@ namespace DigitalHouse.Communication.Session
             mIsLoggedIn = true;
         }
 
+        public void Logout()
+        {
+            mIsLoggedIn = false;
+        }
+
         private readonly Socket mSocket;
 
         public TcpHomeSession(Socket socket)

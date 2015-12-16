@@ -1,10 +1,14 @@
-﻿using DigitalHouse.Commands;
+﻿using System;
+using System.Runtime.InteropServices;
+using DigitalHouse.Commands;
+using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
 using FakeItEasy;
 using NUnit.Framework;
 
 namespace DigitalHouseTests.CommandParser
 {
+    [TestFixture] 
     public class CommandParserTests
     {
         private const string SomeInvalidCommand = "SomethingInvalid";
@@ -12,70 +16,26 @@ namespace DigitalHouseTests.CommandParser
         private const string NotEnoughParametersWithCommand = "SetDeviceValue device";
         private const string TooMuchParametersWithCommand = "SetDeviceValue device value something";
 
-        [Test]
-        public void ParseCommand_SomeInvalidCommand_ReturnUnknownCommand()
+        private static object[] InputOutputCases =
+        {
+            new object[] { SomeInvalidCommand, typeof(UnknownCommand) },
+            new object[] { AllUppercaseCommand, typeof(ListDevices) },
+            new object[] { "", typeof(UnknownCommand) },
+            new object[] { null, typeof(UnknownCommand) },
+            new object[] { NotEnoughParametersWithCommand, typeof(SetDeviceValue) },
+            new object[] { TooMuchParametersWithCommand, typeof(SetDeviceValue) }
+        };
+
+        [Test, TestCaseSource("InputOutputCases")]
+        public void InputOutputTest(string inputCommand, Type expectedParsing)
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
+            var fakeHomeSession = A.Fake<IHomeSession>();
 
-            var command = commandParser.Parse(SomeInvalidCommand);
-
-            Assert.AreEqual(typeof(UnknownCommand), command.GetType());
-        }
-
-        [Test]
-        public void ParseCommand_UnusualCommandCasing_ReturnCorrectCommand()
-        {
-            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
-
-            var command = commandParser.Parse(AllUppercaseCommand);
-
-            Assert.AreEqual(typeof(ListDevices), command.GetType());
-        }
-
-        [Test]
-        public void ParseCommand_EmptyCommand_ReturnUnknownCommand()
-        {
-            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
-
-            var command = commandParser.Parse("");
-
-            Assert.AreEqual(typeof(UnknownCommand), command.GetType());
-        }
-
-        [Test]
-        public void ParseCommand_NullCommand_ReturnUnknownCommand()
-        {
-            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
-
-            var command = commandParser.Parse(null);
-
-            Assert.AreEqual(typeof(UnknownCommand), command.GetType());
-        }
-
-        [Test]
-        public void ParseCommand_NotEnoughParameters_ReturnCorrectCommand()
-        {
-            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
-
-            var command = commandParser.Parse(NotEnoughParametersWithCommand);
-
-            Assert.AreEqual(typeof(SetDeviceValue), command.GetType());
-        }
-
-        [Test]
-        public void ParseCommand_TooMuchParameters_ReturnCorrectCommand()
-        {
-            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
-
-            var command = commandParser.Parse(TooMuchParametersWithCommand);
-
-            Assert.AreEqual(typeof(SetDeviceValue), command.GetType());
+            fakeHomeSession.Login();
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeHomeSession);
+            var command = commandParser.Parse(inputCommand);
+            Assert.AreEqual(expectedParsing, command.GetType());
         }
     }
 }

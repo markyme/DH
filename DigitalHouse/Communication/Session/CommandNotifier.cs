@@ -4,29 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalHouse.BL.CommandExecutors;
+using DigitalHouse.DB;
 
 namespace DigitalHouse.Communication.Session
 {
     public class CommandNotifier
     {
         private readonly INewSessionNotifier mNewSessionNotifier;
-        private readonly ICommandExecutor mCommandExecutor;
+        private readonly IDeviceRepository mDeviceRepository;
 
-        public CommandNotifier(INewSessionNotifier notifier, ICommandExecutor commandExecutor)
+        public CommandNotifier(INewSessionNotifier notifier, IDeviceRepository deviceRepository)
         {
-            mCommandExecutor = commandExecutor;
+            mDeviceRepository = deviceRepository;
             mNewSessionNotifier = notifier;
+
             RegisterForNewSessions();
         }
 
         private void RegisterForNewSessions()
         {
-            mNewSessionNotifier.OnNewSession += RegisterSessionForNewMessage;
+            //mNewSessionNotifier.OnNewSession += (newSession) => newSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, newSession).ExecuteCommand;
+            mNewSessionNotifier.OnNewSession += NotifyOnCommand;
         }
 
-        private void RegisterSessionForNewMessage(IHomeSession homeSession)
+        private void NotifyOnCommand(IHomeSession homeSession)
         {
-            homeSession.OnMessageRecieved += mCommandExecutor.ExecuteCommand;
+            homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, homeSession).ExecuteCommand;
         }
     }
 }

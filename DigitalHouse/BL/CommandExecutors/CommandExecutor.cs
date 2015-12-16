@@ -2,6 +2,7 @@
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Protocols;
 using DigitalHouse.Communication.Session;
+using DigitalHouse.DB;
 
 namespace DigitalHouse.BL.CommandExecutors
 {
@@ -9,19 +10,16 @@ namespace DigitalHouse.BL.CommandExecutors
     {
         private readonly ICommandParser mCommandParser;
 
-        public CommandExecutor(ICommandParser commandParser)
+        public CommandExecutor(IDeviceRepository deviceRepository, IHomeSession homeSession)
         {
-            mCommandParser = commandParser;
+            mCommandParser = new CommandParser(deviceRepository, homeSession);
         }
 
         public void ExecuteCommand(IHomeSession homeSession, string message)
         {
             var command = mCommandParser.Parse(message);
-            
-            if (command.CanExecute())
-            {
-                homeSession.Write(command.Execute());
-            }
+
+            homeSession.Write(command.CanExecute() ? command.Execute() : "Cannot Execute Command");
         }
     }
 }
