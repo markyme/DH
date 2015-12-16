@@ -15,22 +15,15 @@ namespace DigitalHouse
         static void Main(string[] args)
         {
             var tcpNewSessionNotifier = new TcpNewSessionNotifier();
-            List<INewSessionNotifier> newSessionNotifiers = new List<INewSessionNotifier>
-            {
-                tcpNewSessionNotifier
-            };
-            
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
             var commandParser = new CommandParser(hardCodedDeviceRepository);
             var commandExecutor = new CommandExecutor(commandParser);
-            
-            var commandNotifier = new CommandNotifier(newSessionNotifiers, commandExecutor);
+
+            var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, commandExecutor);
             //tcpNewSessionNotifier.OnNewSession += x => x.OnMessageRecieved += new CommandExecutor(commandParser).ExecuteCommand;
             
-            foreach (var newSessionNotifier in newSessionNotifiers)
-            {
-                newSessionNotifier.Start();
-            }
+             tcpNewSessionNotifier.Start();
+            
         }
     }
 

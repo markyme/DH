@@ -9,10 +9,10 @@ namespace DigitalHouse.Communication.Session
 {
     public class CommandNotifier
     {
-        private readonly IEnumerable<INewSessionNotifier> mNewSessionNotifier;
+        private readonly INewSessionNotifier mNewSessionNotifier;
         private readonly ICommandExecutor mCommandExecutor;
 
-        public CommandNotifier(IEnumerable<INewSessionNotifier> notifier, ICommandExecutor commandExecutor)
+        public CommandNotifier(INewSessionNotifier notifier, ICommandExecutor commandExecutor)
         {
             mCommandExecutor = commandExecutor;
             mNewSessionNotifier = notifier;
@@ -21,10 +21,7 @@ namespace DigitalHouse.Communication.Session
 
         private void RegisterForNewSessions()
         {
-            foreach (var sessionNotifier in mNewSessionNotifier)
-            {
-                sessionNotifier.OnNewSession += RegisterSessionForNewMessage;
-            }
+            mNewSessionNotifier.OnNewSession += RegisterSessionForNewMessage;
         }
 
         private void RegisterSessionForNewMessage(IHomeSession homeSession)

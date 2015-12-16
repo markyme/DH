@@ -20,8 +20,6 @@ namespace DigitalHouse.Commands
             mValueToSet = parameters.ElementAtOrDefault(1);
         }
 
-        public int NeededParamCount { get { return 2; }}
-
         public string GetName()
         {
             return "SetDeviceValue";

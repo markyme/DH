@@ -18,8 +18,6 @@ namespace DigitalHouse.Commands
             mDeviceRepository = deviceRepository;
         }
 
-        public int NeededParamCount { get; private set; }
-
         public string GetName()
         {
             return "ListDevices";

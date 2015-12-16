@@ -10,8 +10,6 @@ namespace DigitalHouse.Commands
 {
     public interface ICommand
     {
-        int NeededParamCount { get; }
-
         string GetName();
         string Execute();
         bool CanExecute();
