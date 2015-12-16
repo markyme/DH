@@ -23,6 +23,7 @@ namespace DigitalHouse
         }
     }
 
+    // command executer will check for logged in - parser and commands doest know ihomesession
     // Cover all flows and commands on unittests - use nunit testcase
     
 
