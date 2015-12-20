@@ -13,12 +13,10 @@ namespace DigitalHouse.Commands
     public class ListDevices : ICommand
     {
         private readonly IDeviceRepository mDeviceRepository;
-        private readonly IHomeSession mHomeSession;
 
-        public ListDevices(IDeviceRepository deviceRepository, IHomeSession homeHomeSession)
+        public ListDevices(IDeviceRepository deviceRepository)
         {
             mDeviceRepository = deviceRepository;
-            mHomeSession = homeHomeSession;
         }
 
         public string GetName()
@@ -41,7 +39,7 @@ namespace DigitalHouse.Commands
 
         public bool CanExecute()
         {
-            return mHomeSession.IsLoggedIn();
+            return true;
         }
     }
 }

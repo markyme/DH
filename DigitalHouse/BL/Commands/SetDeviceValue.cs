@@ -11,14 +11,13 @@ namespace DigitalHouse.Commands
     public class SetDeviceValue : ICommand
     {
         private readonly IDeviceRepository mDeviceRepository;
-        private readonly IHomeSession mHomeSession;
         private string mDeviceToSet;
         private string mValueToSet;
 
-        public SetDeviceValue(IDeviceRepository deviceRepository, IHomeSession homeSession, IEnumerable<string> parameters)
+        public SetDeviceValue(IDeviceRepository deviceRepository, IEnumerable<string> parameters)
         {
             mDeviceRepository = deviceRepository;
-            mHomeSession = homeSession;
+
             mDeviceToSet = parameters.ElementAtOrDefault(0);
             mValueToSet = parameters.ElementAtOrDefault(1);
         }
@@ -36,7 +35,7 @@ namespace DigitalHouse.Commands
 
         public bool CanExecute()
         {
-            return mHomeSession.IsLoggedIn();
+            return true;
         }
     }
 }

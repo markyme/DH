@@ -9,7 +9,7 @@ using DigitalHouse.Communication.TCP;
 
 namespace DigitalHouse.Communication.Session
 {
-    public class TcpHomeSession : IHomeSession
+    public class TcpHomeSession : IHomeSession, ILogin
     {
         private bool mIsLoggedIn = false;
 
@@ -21,7 +21,15 @@ namespace DigitalHouse.Communication.Session
 
         public void Login()
         {
-            mIsLoggedIn = true;
+            if (mIsLoggedIn)
+            {
+                Write("Already Logged In");
+            }
+            else
+            {
+                mIsLoggedIn = true;
+                Write("Logged In");
+            }
         }
 
         public void Logout()
@@ -57,7 +65,7 @@ namespace DigitalHouse.Communication.Session
 
         public void Write(string message)
         {
-            mSocket.Send(Encoding.ASCII.GetBytes(message));
+            mSocket.Send(Encoding.ASCII.GetBytes(message + "\n"));
         }
 
         private static string GetMessageFromClient(Socket socket)

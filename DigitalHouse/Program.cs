@@ -11,7 +11,6 @@ namespace DigitalHouse
 {
     public class DigitalHouse
     {
-
         static void Main(string[] args)
         {
             var tcpNewSessionNotifier = new TcpNewSessionNotifier();
@@ -24,7 +23,7 @@ namespace DigitalHouse
     }
 
     // command executer will check for logged in - parser and commands doest know ihomesession
-    // Cover all flows and commands on unittests - use nunit testcase
+    // test commands
     
 
     //TODO:  Error Handling - per module + global + client Lost = not ending

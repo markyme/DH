@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using DigitalHouse.BL.Commands;
 using DigitalHouse.Commands;
-using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
 
 namespace DigitalHouse.BL.CommandParsers
@@ -12,12 +9,10 @@ namespace DigitalHouse.BL.CommandParsers
     public class CommandParser : ICommandParser
     {
         private readonly IDeviceRepository mDeviceRepository;
-        private readonly IHomeSession mHomeSession;
 
-        public CommandParser(IDeviceRepository deviceRepository, IHomeSession homeSession)
+        public CommandParser(IDeviceRepository deviceRepository)
         {
             mDeviceRepository = deviceRepository;
-            mHomeSession = homeSession;
         }
 
         public ICommand Parse(string message)
@@ -32,16 +27,10 @@ namespace DigitalHouse.BL.CommandParsers
             switch (parameters.FirstOrDefault().ToLower())
             {
                 case "listdevices":
-                    return new ListDevices(mDeviceRepository, mHomeSession);
+                    return new ListDevices(mDeviceRepository);
 
                 case "setdevicevalue":
-                    return new SetDeviceValue(mDeviceRepository, mHomeSession, parameters.Skip(1));
-
-                case "login":
-                    return new Login(mHomeSession);
-
-                case "logout":
-                    return new Logout(mHomeSession);
+                    return new SetDeviceValue(mDeviceRepository, parameters.Skip(1));
 
                 default:
                     return new UnknownCommand();

@@ -10,15 +10,29 @@ namespace DigitalHouse.BL.CommandExecutors
     {
         private readonly ICommandParser mCommandParser;
 
-        public CommandExecutor(IDeviceRepository deviceRepository, IHomeSession homeSession)
+        public CommandExecutor(IDeviceRepository deviceRepository)
         {
-            mCommandParser = new CommandParser(deviceRepository, homeSession);
+            mCommandParser = new CommandParser(deviceRepository);
         }
 
         public void ExecuteCommand(IHomeSession homeSession, string message)
         {
-            var command = mCommandParser.Parse(message);
 
+
+
+            if (message == "login")
+            {
+                homeSession.Login();
+                return;
+            }
+
+            if (!homeSession.IsLoggedIn())
+            {
+                homeSession.Write("Not Logged in");
+                return;
+            }
+
+            var command = mCommandParser.Parse(message);
             homeSession.Write(command.CanExecute() ? command.Execute() : "Cannot Execute Command");
         }
     }

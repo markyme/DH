@@ -31,7 +31,6 @@ namespace DigitalHouse.Communication.TCP
             }
         }
 
-
         public void CreateNewSession(Socket socket)
         {
             Console.WriteLine("Connection accepted from " + socket.RemoteEndPoint);
