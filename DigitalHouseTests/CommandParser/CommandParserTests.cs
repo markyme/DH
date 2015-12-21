@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using DigitalHouse.BL.Commands;
 using DigitalHouse.Commands;
 using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
+using DigitalHouse.DB.UsersRepo;
 using FakeItEasy;
 using FakeItEasy.Creation;
+using FakeItEasy.ExtensionSyntax.Full;
 using NUnit.Framework;
 
 namespace DigitalHouseTests.CommandParser
@@ -33,39 +37,13 @@ namespace DigitalHouseTests.CommandParser
         public void InputOutputTest(string inputCommand, Type expectedParsing)
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
+            var fakeUsersReporisotyr = A.Fake<IUserRepository>();
             var fakeHomeSession = A.Fake<IHomeSession>();
 
-            fakeHomeSession.Login();
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository);
+            //fakeHomeSession.Login();
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr);
             var command = commandParser.Parse(inputCommand);
             Assert.AreEqual(expectedParsing, command.GetType());
         }
-    }
-
-
-    [TestFixture]
-    public class UnknownCommandTests
-    {
-        [Test]
-        public void UnknownCommand_CanExecute_True()
-        {
-            UnknownCommand unknownCommand = A.Fake<UnknownCommand>();
-            Assert.AreEqual(true, unknownCommand.CanExecute());
-        }
-
-        [Test]
-        public void UnknownCommand_Execute_CorrectResponse()
-        {
-            UnknownCommand unknownCommand = A.Fake<UnknownCommand>();
-            const string UnknownCommandExpectedExecuteString = "UnknownCommand.";
-            Assert.AreEqual(UnknownCommandExpectedExecuteString, unknownCommand.Execute());
-        }
-    }
-
-
-    [TestFixture]
-    public class ListDevicesTests
-    {
-        
     }
 }

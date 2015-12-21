@@ -2,6 +2,7 @@
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
+using DigitalHouse.DB.UsersRepo;
 
 namespace DigitalHouse
 {
@@ -9,10 +10,15 @@ namespace DigitalHouse
     {
         private readonly INewSessionNotifier mNewSessionSessionNotifier;
         private readonly IDeviceRepository mDeviceRepository;
+        private readonly IUserRepository mUserRepository;
 
-        public CommandNotifier(INewSessionNotifier sessionNotifier, IDeviceRepository deviceRepository)
+        public CommandNotifier(
+                  INewSessionNotifier sessionNotifier,
+                  IDeviceRepository deviceRepository,
+                  IUserRepository userRepository)
         {
             mDeviceRepository = deviceRepository;
+            mUserRepository = userRepository;
             mNewSessionSessionNotifier = sessionNotifier;
 
             RegisterForNewSessions();
@@ -25,7 +31,7 @@ namespace DigitalHouse
 
         private void NotifyOnCommand(IHomeSession homeSession)
         {
-            homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository).ExecuteCommand;
+            homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, mUserRepository).ExecuteCommand;
         }
     }
 }

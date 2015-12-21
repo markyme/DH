@@ -9,7 +9,7 @@ using DigitalHouse.Communication.TCP;
 
 namespace DigitalHouse.Communication.Session
 {
-    public class TcpHomeSession : IHomeSession, ILogin
+    public class TcpHomeSession : IHomeSession
     {
         private bool mIsLoggedIn = false;
 

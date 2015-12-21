@@ -15,8 +15,9 @@ namespace DigitalHouse
         {
             var tcpNewSessionNotifier = new TcpNewSessionNotifier();
             var hardCodedDeviceRepository = new HardCodedDeviceRepository();
+            var hardCodedUserRepository = new HardCodedUserRepository();
 
-            var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, hardCodedDeviceRepository);
+            var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, hardCodedDeviceRepository, hardCodedUserRepository);
 
             tcpNewSessionNotifier.Start();
         }
@@ -24,7 +25,7 @@ namespace DigitalHouse
 
     // command executer will check for logged in - parser and commands doest know ihomesession
     // test commands
-    
+    // validate commands param count and type
 
     //TODO:  Error Handling - per module + global + client Lost = not ending
     //TODO:  Extendable - Different Listeners (communication, JSON commands?) 

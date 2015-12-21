@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandParser\CommandParserTests.cs" />
+    <Compile Include="CommandParser\LoginCommandTests.cs" />
+    <Compile Include="CommandParser\UnknownCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

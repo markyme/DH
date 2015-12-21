@@ -13,23 +13,26 @@ namespace DigitalHouse.DB.UsersRepo
 
         public HardCodedUserRepository()
         {
-            mUsers.TryAdd("markTheCool", new User("markTheCool"));
-            mUsers.TryAdd("markTheGreat", new User("markTheGreat"));
+            mUsers.TryAdd("mark", new User("mark"));
+            mUsers.TryAdd("marky", new User("marky"));
         }
 
-        public void Login(string userToLogin)
+        public void Login(string user)
         {
-            mUsers[userToLogin].IsLoggedIn = true;
+            if (IsExists(user))
+            {
+                mUsers[user].IsLoggedIn = true;
+            }
         }
 
-        public bool IsLoggedIn(string userToCheck)
+        public bool IsLoggedIn(string user)
         {
-            return mUsers[userToCheck].IsLoggedIn;
+            return mUsers[user].IsLoggedIn;
         }
 
-        public void Logout(string userToLogout)
+        public bool IsExists(string user)
         {
-            mUsers[userToLogout].IsLoggedIn = false;
+            return mUsers.ContainsKey(user);
         }
     }
 }
