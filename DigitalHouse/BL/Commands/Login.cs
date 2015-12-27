@@ -12,11 +12,13 @@ namespace DigitalHouse.BL.Commands
     {
         private readonly string mUserToLogin;
         private readonly IUserRepository mUserRepository;
+        private readonly IEnumerable<string> mParameters;
 
         public Login(IUserRepository userRepository, IEnumerable<string> parameters)
         {
             mUserRepository = userRepository;
-            mUserToLogin = parameters.ElementAtOrDefault(0);
+            mParameters = parameters;
+            mUserToLogin = mParameters.ElementAtOrDefault(0);
         }
 
         public string GetName()
@@ -26,15 +28,12 @@ namespace DigitalHouse.BL.Commands
 
         public string Execute()
         {
-            if (!mUserRepository.IsExists(mUserToLogin)) return "false";
-            mUserRepository.Login(mUserToLogin);
-            
-            return "true";
+            return mUserRepository.IsExists(mUserToLogin) ? "true" : "false";
         }
 
         public bool CanExecute()
         {
-            return !String.IsNullOrEmpty(mUserToLogin);
+            return !String.IsNullOrEmpty(mUserToLogin) && mParameters.Count() < 2;
         }
     }
 }

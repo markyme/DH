@@ -28,7 +28,7 @@ namespace DigitalHouseTests.CommandParser
             UnknownCommand unknownCommand = A.Fake<UnknownCommand>();
             const string UnknownCommandExpectedExecuteString = "UnknownCommand.";
 
-            bool result = unknownCommand.CanExecute();
+            string result = unknownCommand.Execute();
 
             Assert.AreEqual(UnknownCommandExpectedExecuteString, result);
         }

@@ -46,7 +46,7 @@ namespace DigitalHouse.BL.CommandParsers
 
         private static List<string> ParseStringToParameterList(string messageToParse)
         {
-            return messageToParse.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries).ToList();
+            return messageToParse.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
     }
 }

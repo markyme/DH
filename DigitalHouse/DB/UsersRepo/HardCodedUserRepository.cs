@@ -17,19 +17,6 @@ namespace DigitalHouse.DB.UsersRepo
             mUsers.TryAdd("marky", new User("marky"));
         }
 
-        public void Login(string user)
-        {
-            if (IsExists(user))
-            {
-                mUsers[user].IsLoggedIn = true;
-            }
-        }
-
-        public bool IsLoggedIn(string user)
-        {
-            return mUsers[user].IsLoggedIn;
-        }
-
         public bool IsExists(string user)
         {
             return mUsers.ContainsKey(user);

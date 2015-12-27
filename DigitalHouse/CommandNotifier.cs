@@ -31,7 +31,12 @@ namespace DigitalHouse
 
         private void NotifyOnCommand(IHomeSession homeSession)
         {
-            homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, mUserRepository).ExecuteCommand;
+            //homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, mUserRepository).ExecuteCommand;
+            homeSession.OnMessageRecieved += (session, request) =>
+            {
+                var commandExecutor = new CommandExecutor(mDeviceRepository, mUserRepository);
+                commandExecutor.ExecuteCommand(session, request);
+            };
         }
     }
 }

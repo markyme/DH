@@ -13,30 +13,10 @@ namespace DigitalHouseTests.CommandParser
     [TestFixture]
     public class LoginTests
     {
-/*        const string EXISTING_USER = "userexists";
-        const string NON_EXISTING_USER = "doesntexist";
-
-        private static readonly object[] UserInputAndOutputCases =
-        {
-            new object[] { EXISTING_USER, true, "true"},
-            new object[] { NON_EXISTING_USER, true, "false"},
-
-        };
-
-        [Test, TestCaseSource("UserInputAndOutputCases")]
-        public void ParameterInputAndResponses(string parameters, bool canExecute, string executeResponse)
-        {
-            IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
-            A.CallTo(() => fakeUserRepository.IsExists(parameters)).Returns(true);
-        }*/
-
-        // 
-
-
         [Test]
         public void Login_UserExist_CommandPassed()
         {
-            const string EXISTING_USER = "UserNameWithNoWhitespace";
+            const string EXISTING_USER = "UserNameWithoutWhiteSpaces";
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
             A.CallTo(() => fakeUserRepository.IsExists(EXISTING_USER)).Returns(true);
             List<string> parameters = new List<string> { EXISTING_USER };
@@ -48,9 +28,9 @@ namespace DigitalHouseTests.CommandParser
         }
 
         [Test]
-        public void Login_UserDoesntExist_CommandPassed()
+        public void Login_UserDoesntExist_CommandFailed()
         {
-            const string NON_EXISTING_USER = "doesntexist";
+            const string NON_EXISTING_USER = "UserNameWithoutWhiteSpaces";
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
             A.CallTo(() => fakeUserRepository.IsExists(NON_EXISTING_USER)).Returns(false);
             List<string> parameters = new List<string> { NON_EXISTING_USER };
@@ -82,5 +62,48 @@ namespace DigitalHouseTests.CommandParser
 
             Assert.AreEqual(false, login.CanExecute());
         }
+
+        [Test]
+        public void Login_TooMuchParameters_CannotExecute()
+        {
+            const string SOME_PARAMETER_VALUE = "NonSegnificantValue";
+
+            IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            List<string> parameters = new List<string> { SOME_PARAMETER_VALUE, SOME_PARAMETER_VALUE };
+
+            var login = new Login(fakeUserRepository, parameters);
+
+            Assert.AreEqual(false, login.CanExecute());
+        }
+
+        [Test]
+        public void Login_NoParameters_CannotExecute()
+        {
+            IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            List<string> parameters = new List<string> {};
+
+            var login = new Login(fakeUserRepository, parameters);
+
+            Assert.AreEqual(false, login.CanExecute());
+        }
     }
 }
+
+/*        const string EXISTING_USER = "userexists";
+        const string NON_EXISTING_USER = "doesntexist";
+
+        private static readonly object[] UserInputAndOutputCases =
+        {
+            new object[] { EXISTING_USER, true, "true"},
+            new object[] { NON_EXISTING_USER, true, "false"},
+
+        };
+
+        [Test, TestCaseSource("UserInputAndOutputCases")]
+        public void ParameterInputAndResponses(string parameters, bool canExecute, string executeResponse)
+        {
+            IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            A.CallTo(() => fakeUserRepository.IsExists(parameters)).Returns(true);
+        }*/
+
+// 

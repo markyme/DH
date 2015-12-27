@@ -9,12 +9,10 @@ namespace DigitalHouse.DB.UsersRepo
     public class User
     {
         public string Name;
-        public bool IsLoggedIn;
 
-        public User(string name, bool isLoggedIn = false)
+        public User(string name)
         {
             Name = name;
-            IsLoggedIn = isLoggedIn;
         }
     }
 }

@@ -8,8 +8,6 @@ namespace DigitalHouse.DB.UsersRepo
 {
     public interface IUserRepository
     {
-        void Login(string user);
-        bool IsLoggedIn(string user);
         bool IsExists(string user);
     }
 }

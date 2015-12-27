@@ -38,11 +38,10 @@ namespace DigitalHouseTests.CommandParser
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
             var fakeUsersReporisotyr = A.Fake<IUserRepository>();
-            var fakeHomeSession = A.Fake<IHomeSession>();
 
-            //fakeHomeSession.Login();
             var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr);
             var command = commandParser.Parse(inputCommand);
+
             Assert.AreEqual(expectedParsing, command.GetType());
         }
     }

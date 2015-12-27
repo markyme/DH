@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DigitalHouse.BL.CommandExecutors;
 using DigitalHouse.BL.CommandParsers;
 using DigitalHouse.Communication;
@@ -18,19 +19,20 @@ namespace DigitalHouse
             var hardCodedUserRepository = new HardCodedUserRepository();
 
             var commandNotifier = new CommandNotifier(tcpNewSessionNotifier, hardCodedDeviceRepository, hardCodedUserRepository);
-
+            
             tcpNewSessionNotifier.Start();
         }
     }
 
-    // command executer will check for logged in - parser and commands doest know ihomesession
-    // test commands
+
     // validate commands param count and type
+/*    Class dependencies should be received from outside //inversion of control
+tests for a couple of commands
+LoginCommand should be responsible for logging in
+Unknown command --> throw exception*/
 
     //TODO:  Error Handling - per module + global + client Lost = not ending
-    //TODO:  Extendable - Different Listeners (communication, JSON commands?) 
-    //TODO:  Thread - move to newer way
+    //TODO:  Thread - async await
+    // Exception from parser on empty command - catch on higher level
 
-    //  Naming - Correct and Related
-    //  Watch for unsafe operations
 }

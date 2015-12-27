@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DigitalHouse.Communication.Session;
+using System.Linq.Expressions;
+using DigitalHouse.Commands;
 using DigitalHouse.DB;
-using DigitalHouse.DB.UsersRepo;
 
-namespace DigitalHouse.Commands
+namespace DigitalHouse.BL.Commands
 {
     public class ListDevices : ICommand
     {
@@ -26,17 +23,22 @@ namespace DigitalHouse.Commands
 
         public string Execute()
         {
-            ConcurrentDictionary<string, SettableDevice> devices = mDeviceRepository.GetDevices();
+            var devices = mDeviceRepository.GetDevices();
 
-            string resp = "Devices: ";
-            foreach (KeyValuePair<string, SettableDevice> settableDevice in devices)
+            if (devices.IsEmpty)
             {
-                resp += settableDevice.Key + ", State: " + settableDevice.Value.Value + " ";
+                return "No Devices Found";
             }
 
-            return resp;
+            string deviceList = "Devices:" + Environment.NewLine;
+            foreach (var settableDevice in devices)
+            {
+                deviceList += settableDevice.Key + ", State: " + settableDevice.Value.Value + Environment.NewLine;
+            }
+            
+            return deviceList;
         }
-
+        
         public bool CanExecute()
         {
             return true;
