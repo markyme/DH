@@ -25,14 +25,8 @@ namespace DigitalHouse
     }
 
 
-    // validate commands param count and type
-/*    Class dependencies should be received from outside //inversion of control
-tests for a couple of commands
-LoginCommand should be responsible for logging in
-Unknown command --> throw exception*/
+//LoginCommand should be responsible for logging in
 
-    //TODO:  Error Handling - per module + global + client Lost = not ending
-    //TODO:  Thread - async await
-    // Exception from parser on empty command - catch on higher level
+//Error Handling - per module + global
 
 }

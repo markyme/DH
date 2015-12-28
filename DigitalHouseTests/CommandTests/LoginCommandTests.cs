@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DigitalHouse.BL.Commands;
+using DigitalHouse.Communication.Session;
 using DigitalHouse.DB.UsersRepo;
 using FakeItEasy;
 using NUnit.Framework;
@@ -18,36 +19,38 @@ namespace DigitalHouseTests.CommandParser
         {
             const string EXISTING_USER = "UserNameWithoutWhiteSpaces";
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             A.CallTo(() => fakeUserRepository.IsExists(EXISTING_USER)).Returns(true);
             List<string> parameters = new List<string> { EXISTING_USER };
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
             Assert.AreEqual(true, login.CanExecute());
-            Assert.AreEqual("true", login.Execute());
+            Assert.AreEqual("OK", login.Execute());
         }
 
         [Test]
-        public void Login_UserDoesntExist_CommandFailed()
+        public void Login_UserDoesntExist_CannotExecute()
         {
             const string NON_EXISTING_USER = "UserNameWithoutWhiteSpaces";
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             A.CallTo(() => fakeUserRepository.IsExists(NON_EXISTING_USER)).Returns(false);
             List<string> parameters = new List<string> { NON_EXISTING_USER };
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
-            Assert.AreEqual(true, login.CanExecute());
-            Assert.AreEqual("false", login.Execute());
+            Assert.AreEqual(false, login.CanExecute());
         }
 
         [Test]
         public void Login_EmptyStringAsParameter_CannotExecute()
         {
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             List<string> parameters = new List<string> { "" };
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
             Assert.AreEqual(false, login.CanExecute());
         }
@@ -56,9 +59,10 @@ namespace DigitalHouseTests.CommandParser
         public void Login_NullAsParameter_CannotExecute()
         {
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             List<string> parameters = new List<string> { null };
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
             Assert.AreEqual(false, login.CanExecute());
         }
@@ -69,9 +73,10 @@ namespace DigitalHouseTests.CommandParser
             const string SOME_PARAMETER_VALUE = "NonSegnificantValue";
 
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             List<string> parameters = new List<string> { SOME_PARAMETER_VALUE, SOME_PARAMETER_VALUE };
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
             Assert.AreEqual(false, login.CanExecute());
         }
@@ -80,9 +85,10 @@ namespace DigitalHouseTests.CommandParser
         public void Login_NoParameters_CannotExecute()
         {
             IUserRepository fakeUserRepository = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
             List<string> parameters = new List<string> {};
 
-            var login = new Login(fakeUserRepository, parameters);
+            var login = new Login(fakeUserRepository, fakeLogin, parameters);
 
             Assert.AreEqual(false, login.CanExecute());
         }

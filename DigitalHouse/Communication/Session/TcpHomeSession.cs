@@ -59,6 +59,7 @@ namespace DigitalHouse.Communication.Session
                 catch (Exception exception)
                 {
                     Console.WriteLine("Warning: connection failed: " + exception);
+                    mSocket.Close();
                 }
             }
         }

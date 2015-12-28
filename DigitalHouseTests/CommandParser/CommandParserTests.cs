@@ -38,8 +38,9 @@ namespace DigitalHouseTests.CommandParser
         {
             var fakeDeviceRepository = A.Fake<IDeviceRepository>();
             var fakeUsersReporisotyr = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
 
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
             var command = commandParser.Parse(inputCommand);
 
             Assert.AreEqual(expectedParsing, command.GetType());

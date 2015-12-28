@@ -1,6 +1,7 @@
 ﻿using System;
 using DigitalHouse.BL.CommandParsers;
 using DigitalHouse.BL.Commands;
+using DigitalHouse.Commands;
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Protocols;
 using DigitalHouse.Communication.Session;
@@ -13,31 +14,31 @@ namespace DigitalHouse.BL.CommandExecutors
     {
         private readonly ICommandParser mCommandParser;
 
-        public CommandExecutor(IDeviceRepository deviceRepository, IUserRepository userRepository)
+        public CommandExecutor(ICommandParser commandParser)
         {
-            mCommandParser = new CommandParser(deviceRepository, userRepository);
+            mCommandParser = commandParser;
         }
 
         public void ExecuteCommand(IHomeSession homeSession, string message)
         {
-            var command = mCommandParser.Parse(message);
+            ICommand command = null;
 
-            if (command.GetType() == typeof (Login))
+            try
             {
-                if (command.CanExecute())
-                {
-                    var response = command.Execute();
-                    if (Boolean.Parse(response).Equals(true))
-                    {
-                        homeSession.Login();
-                        return;
-                    }
-                }
-                homeSession.Write("Login Failed");
+                command = mCommandParser.Parse(message);
+            }
+            catch (CommandParsingExecption execption)
+            {
+                // Who knows about this?
+                homeSession.Write(execption.Message);
+            }
+
+            if (command == null)
+            {
                 return;
             }
 
-            if (!homeSession.IsLoggedIn())
+            if (!homeSession.IsLoggedIn() && command.GetType() != typeof (Login))
             {
                 homeSession.Write("Not Logged In");
                 return;

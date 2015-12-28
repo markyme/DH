@@ -1,4 +1,5 @@
 ﻿using DigitalHouse.BL.CommandExecutors;
+using DigitalHouse.BL.CommandParsers;
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Session;
 using DigitalHouse.DB;
@@ -31,10 +32,10 @@ namespace DigitalHouse
 
         private void NotifyOnCommand(IHomeSession homeSession)
         {
-            //homeSession.OnMessageRecieved += new CommandExecutor(mDeviceRepository, mUserRepository).ExecuteCommand;
             homeSession.OnMessageRecieved += (session, request) =>
             {
-                var commandExecutor = new CommandExecutor(mDeviceRepository, mUserRepository);
+                var commandParser = new CommandParser(mDeviceRepository, mUserRepository, homeSession);
+                var commandExecutor = new CommandExecutor(commandParser);
                 commandExecutor.ExecuteCommand(session, request);
             };
         }
