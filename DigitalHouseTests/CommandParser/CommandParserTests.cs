@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DigitalHouse.BL.CommandExecutors;
 using DigitalHouse.BL.Commands;
 using DigitalHouse.Commands;
 using DigitalHouse.Communication.Session;
@@ -24,13 +25,10 @@ namespace DigitalHouseTests.CommandParser
         {
             new object[] { SomeInvalidCommand, typeof(UnknownCommand) },
             new object[] { AllUppercaseCommand, typeof(ListDevices) },
-            new object[] { "", typeof(UnknownCommand) },
-            new object[] { null, typeof(UnknownCommand) },
             new object[] { NotEnoughParametersWithCommand, typeof(SetDeviceValue) },
             new object[] { TooMuchParametersWithCommand, typeof(SetDeviceValue) },
             new object[] { "ListDevices", typeof(ListDevices) },
             new object[] { "SetDeviceValue", typeof(SetDeviceValue) }
-            
         };
 
         [Test, TestCaseSource("InputOutputCases")]
@@ -40,10 +38,28 @@ namespace DigitalHouseTests.CommandParser
             var fakeUsersReporisotyr = A.Fake<IUserRepository>();
             var fakeLogin = A.Fake<ILoginActions>();
 
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
-            var command = commandParser.Parse(inputCommand);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandFactoryByString(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
+            var command = commandParser.Create(inputCommand);
 
             Assert.AreEqual(expectedParsing, command.GetType());
+        }
+
+        private static readonly object[] ExpectedExceptionByInput =
+        {
+            new object[] {""},
+            new object[] {null}
+        };
+
+        [Test, TestCaseSource("ExpectedExceptionByInput")]
+        public void ThrowsExceptionByInput(string input)
+        {
+            var fakeDeviceRepository = A.Fake<IDeviceRepository>();
+            var fakeUsersReporisotyr = A.Fake<IUserRepository>();
+            var fakeLogin = A.Fake<ILoginActions>();
+
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandFactoryByString(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
+
+            Assert.Throws<CommandParsingExecption>(() => commandParser.Create(input));
         }
     }
 }

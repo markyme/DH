@@ -11,31 +11,13 @@ namespace DigitalHouse.Communication.Session
 {
     public class TcpHomeSession : IHomeSession
     {
-        private bool mIsLoggedIn = false;
-
         public event NewMessageRecievedEvent OnMessageRecieved;
-        public bool IsLoggedIn()
-        {
-            return mIsLoggedIn;
-        }
 
-        public void Login()
-        {
-            if (mIsLoggedIn)
-            {
-                Write("Already Logged In");
-            }
-            else
-            {
-                mIsLoggedIn = true;
-                Write("Logged In");
-            }
-        }
+        private bool mIsLoggedIn;
 
-        public void Logout()
-        {
-            mIsLoggedIn = false;
-        }
+        public bool IsLoggedIn() { return mIsLoggedIn; }
+
+        public void Login() { mIsLoggedIn = true; }
 
         private readonly Socket mSocket;
 

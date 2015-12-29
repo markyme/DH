@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DigitalHouse.BL.CommandExecutors
 {
-    class CommandParsingExecption : Exception
+    public class CommandParsingExecption : Exception
     {
         public CommandParsingExecption() { }
 

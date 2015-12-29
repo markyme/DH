@@ -23,8 +23,4 @@ namespace DigitalHouse
             tcpNewSessionNotifier.Start();
         }
     }
-
-
-//Error Handling - per module + global
-
 }

@@ -29,36 +29,27 @@ namespace DigitalHouseTests.CommandTests
         [Test]
         public void ListDevices_TwoDevicesOnDB_BothDevicesShown()
         {
+            const string someDeviceName = "light";
+            const string otherDeviceName = "light2";
+            const int someIntDeviceState = 100;
+
+            var expectedResponse =
+                someDeviceName + ", State: " +
+                someIntDeviceState +
+                Environment.NewLine +
+                otherDeviceName + ", State: " +
+                someIntDeviceState;
+
             IDeviceRepository fakeDeviceRepository = A.Fake<IDeviceRepository>();
-            var deviceRepoContent = new ConcurrentDictionary<string, SettableDevice>();
-            deviceRepoContent.TryAdd("light", new SettableDevice("light", 100));
-            deviceRepoContent.TryAdd("light2", new SettableDevice("light", 100));
-            A.CallTo(() => fakeDeviceRepository.GetDevices()).Returns(deviceRepoContent);
+            var deviceRepo = new ConcurrentDictionary<string, SettableDevice>();
+            deviceRepo.TryAdd(someDeviceName, new SettableDevice(someDeviceName, someIntDeviceState));
+            deviceRepo.TryAdd(otherDeviceName, new SettableDevice(otherDeviceName, someIntDeviceState));
+            A.CallTo(() => fakeDeviceRepository.GetDevices()).Returns(deviceRepo);
 
             ListDevices listDevices = new ListDevices(fakeDeviceRepository);
 
             var response = listDevices.Execute();
-            Debug.WriteLine(response);
+            Assert.AreEqual(expectedResponse, response);
         }
-
-        [Test]
-        public void A2()
-        {
-
-        }
-
-        [Test]
-        public void A3()
-        {
-
-        }
-
-        [Test]
-        public void A4()
-        {
-
-        }
-
-
     }
 }

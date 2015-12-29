@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using DigitalHouse.Commands;
 using DigitalHouse.DB;
@@ -30,15 +31,18 @@ namespace DigitalHouse.BL.Commands
                 return "No Devices Found";
             }
 
-            string deviceList = "Devices:" + Environment.NewLine;
-            foreach (var settableDevice in devices)
+            var result = "";
+
+            foreach (var device in devices)
             {
-                deviceList += settableDevice.Key + ", State: " + settableDevice.Value.Value + Environment.NewLine;
+                result += (device.Key + ", State: " + device.Value.Value);
+
+                if (!devices.Last().Equals(device)) result += Environment.NewLine;
             }
-            
-            return deviceList;
+
+            return result;
         }
-        
+
         public bool CanExecute()
         {
             return true;
