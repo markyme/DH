@@ -21,7 +21,7 @@ namespace DigitalHouse.BL.CommandExecutors
 
         public void ExecuteCommand(IHomeSession homeSession, string message)
         {
-            ICommand command = null;
+            ICommand command;
 
             try
             {
@@ -29,12 +29,7 @@ namespace DigitalHouse.BL.CommandExecutors
             }
             catch (CommandParsingExecption execption)
             {
-                // Who knows about this?
                 homeSession.Write(execption.Message);
-            }
-
-            if (command == null)
-            {
                 return;
             }
 

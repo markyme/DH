@@ -25,8 +25,6 @@ namespace DigitalHouse
     }
 
 
-//LoginCommand should be responsible for logging in
-
 //Error Handling - per module + global
 
 }

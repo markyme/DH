@@ -13,13 +13,13 @@ namespace DigitalHouse.BL.Commands
     {
         private readonly string mUserToLogin;
         private readonly IUserRepository mUserRepository;
-        private readonly ILoginActions mHomeSession;
+        private readonly ILoginActions mLoginActions;
         private readonly IEnumerable<string> mParameters;
 
-        public Login(IUserRepository userRepository, ILoginActions homeSession, IEnumerable<string> parameters)
+        public Login(IUserRepository userRepository, ILoginActions loginActions, IEnumerable<string> parameters)
         {
             mUserRepository = userRepository;
-            mHomeSession = homeSession;
+            mLoginActions = loginActions;
             mParameters = parameters;
             mUserToLogin = mParameters.ElementAtOrDefault(0);
         }
@@ -31,7 +31,7 @@ namespace DigitalHouse.BL.Commands
 
         public string Execute()
         {
-            mHomeSession.Login();
+            mLoginActions.Login();
             return "OK";
         }
 

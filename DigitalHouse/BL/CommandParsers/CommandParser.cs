@@ -34,8 +34,9 @@ namespace DigitalHouse.BL.CommandParsers
             }
 
             List<string> parameters = ParseStringToParameterList(message);
+            string commandName = parameters.FirstOrDefault().ToLower();
 
-            switch (parameters.FirstOrDefault().ToLower())
+            switch (commandName)
             {
                 case "listdevices":
                     return new ListDevices(mDeviceRepository);

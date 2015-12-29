@@ -34,7 +34,7 @@ namespace DigitalHouse
         {
             homeSession.OnMessageRecieved += (session, request) =>
             {
-                var commandParser = new CommandParser(mDeviceRepository, mUserRepository, homeSession);
+                var commandParser = new CommandParser(mDeviceRepository, mUserRepository, session);
                 var commandExecutor = new CommandExecutor(commandParser);
                 commandExecutor.ExecuteCommand(session, request);
             };
