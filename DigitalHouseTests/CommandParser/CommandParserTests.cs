@@ -38,8 +38,8 @@ namespace DigitalHouseTests.CommandParser
             var fakeUsersReporisotyr = A.Fake<IUserRepository>();
             var fakeLogin = A.Fake<ILoginActions>();
 
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandFactoryByString(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
-            var command = commandParser.Create(inputCommand);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
+            var command = commandParser.Parse(inputCommand);
 
             Assert.AreEqual(expectedParsing, command.GetType());
         }
@@ -57,9 +57,9 @@ namespace DigitalHouseTests.CommandParser
             var fakeUsersReporisotyr = A.Fake<IUserRepository>();
             var fakeLogin = A.Fake<ILoginActions>();
 
-            var commandParser = new DigitalHouse.BL.CommandParsers.CommandFactoryByString(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
+            var commandParser = new DigitalHouse.BL.CommandParsers.CommandParser(fakeDeviceRepository, fakeUsersReporisotyr, fakeLogin);
 
-            Assert.Throws<CommandParsingExecption>(() => commandParser.Create(input));
+            Assert.Throws<CommandParsingExecption>(() => commandParser.Parse(input));
         }
     }
 }

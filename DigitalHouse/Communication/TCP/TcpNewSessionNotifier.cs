@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using DigitalHouse.Communication.Protocols;
 using DigitalHouse.Communication.Session;
 
@@ -27,7 +28,7 @@ namespace DigitalHouse.Communication.TCP
                 if (!mListener.Pending()) continue;
 
                 var socket = mListener.AcceptSocket();
-                new Thread(() => CreateNewSession(socket)).Start();
+                new Task(() => CreateNewSession(socket)).Start();
             }
         }
 
