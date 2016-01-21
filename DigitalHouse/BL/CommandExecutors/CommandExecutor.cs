@@ -19,7 +19,7 @@ namespace DigitalHouse.BL.CommandExecutors
             mCommandParser = commandParser;
         }
 
-        public void ExecuteCommand(IHomeSession homeSession, string message)
+        public string ExecuteCommand(IHomeSession homeSession, string message)
         {
             ICommand command;
 
@@ -29,17 +29,16 @@ namespace DigitalHouse.BL.CommandExecutors
             }
             catch (CommandParsingExecption execption)
             {
-                homeSession.Write(execption.Message);
-                return;
+                return execption.Message;
             }
 
             if (!homeSession.IsLoggedIn() && command.GetType() != typeof (Login))
             {
-                homeSession.Write("Not Logged In");
-                return;
+                return "Not Logged In";
             }
 
-            homeSession.Write(command.CanExecute() ? command.Execute() : "Cannot Execute Command");
+            //homeSession.Write(command.CanExecute() ? command.Execute() : "Cannot Execute Command");
+            return (command.CanExecute() ? command.Execute() : "Cannot Execute Command");
         }
     }
 }

@@ -9,8 +9,10 @@ namespace DigitalHouse.Communication.Session
 {
     public interface IHomeSession : ILoginActions
     {
+        IObservable<string> getOnMessageRecievedObservable();
+
         void Write(string message);
-        event NewMessageRecievedEvent OnMessageRecieved;
+     
     }
 
     public interface ILoginActions

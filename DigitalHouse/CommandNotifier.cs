@@ -1,4 +1,6 @@
-﻿using DigitalHouse.BL.CommandExecutors;
+﻿using System;
+using System.Text;
+using DigitalHouse.BL.CommandExecutors;
 using DigitalHouse.BL.CommandParsers;
 using DigitalHouse.Communication;
 using DigitalHouse.Communication.Session;
@@ -27,17 +29,24 @@ namespace DigitalHouse
 
         private void RegisterForNewSessions()
         {
-            mNewSessionSessionNotifier.OnNewSession += NotifyOnCommand;
+            mNewSessionSessionNotifier.OnNewSession += HandleSessionCommunication;
         }
 
-        private void NotifyOnCommand(IHomeSession homeSession)
+        private void HandleSessionCommunication(IHomeSession homeSession)
         {
-            homeSession.OnMessageRecieved += (session, request) =>
+            using (homeSession.getOnMessageRecievedObservable().Subscribe(
+                onNext: msg =>
+                    {
+                        var commandParser = new CommandParser(mDeviceRepository, mUserRepository, homeSession);
+                        var commandExecutor = new CommandExecutor(commandParser);
+                        var resp = commandExecutor.ExecuteCommand(homeSession, msg);
+
+                        homeSession.Write(resp);
+                    }, 
+                 onError: (error) => { Console.WriteLine("error occured: " + error); }))
             {
-                var commandParser = new CommandParser(mDeviceRepository, mUserRepository, session);
-                var commandExecutor = new CommandExecutor(commandParser);
-                commandExecutor.ExecuteCommand(session, request);
-            };
+
+            }
         }
     }
 }

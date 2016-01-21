@@ -9,6 +9,6 @@ namespace DigitalHouse.BL.CommandExecutors
 {
     public interface ICommandExecutor
     {
-        void ExecuteCommand(IHomeSession homeSession, string message);
+        string ExecuteCommand(IHomeSession homeSession, string message);
     }
 }
